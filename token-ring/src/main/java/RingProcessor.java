@@ -8,25 +8,27 @@ public class RingProcessor {
     private final int nodesAmount;
     private final long dataAmount;
     private List<Node> nodeList;
-    private final Logger logger;
     private List<DataPackage> dataPackages;
+    private MetricsCollector metricsCollector;
 
-    RingProcessor(int nodesAmount, long dataAmount, FileHandler logs) {
+    RingProcessor(int nodesAmount, long dataAmount) {
         this.nodesAmount = nodesAmount;
         this.dataAmount = dataAmount;
         this.nodeList = new ArrayList<>();
         this.dataPackages = new ArrayList<>();
-        logger = Logger.getLogger("ringLogger");
-        logger.addHandler(logs);
+        metricsCollector = new MetricsCollector();
 
         init();
     }
 
     private void init() {
         DataCounter dataCounter = new DataCounter(dataAmount);
+        metricsCollector.setDataAmount(dataAmount);
+        metricsCollector.setNodesAmount(nodesAmount);
+
         // nodes
         for (int i = 0; i < nodesAmount; i++) {
-            Node node = new Node(i, dataCounter, logger);
+            Node node = new Node(i, dataCounter);
             nodeList.add(node);
             if (i > 0) {
                 nodeList.get(i - 1).setNext(node);
@@ -47,13 +49,6 @@ public class RingProcessor {
             // список нужен для подсчета статистики
             dataPackages.add(dataPackage);
         }
-
-        // log
-//        logger.log(Level.INFO, "Number of nodes: " + nodesAmount);
-//        for (int i = 0; i < nodesAmount; i++) {
-//            logger.log(Level.INFO, "Node " + i + " contains "
-//                    + nodeList.get(i).getBuffer().size() + " data packages");
-//        }
     }
 
     /**

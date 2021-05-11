@@ -7,12 +7,10 @@ public class Node implements Runnable {
     private final int nodeId;
     private Node next;
     private ConcurrentLinkedQueue<DataPackage> bufferStack;
-    private Logger logger;
     private DataCounter dataCounter;
 
-    Node(int nodeId, DataCounter dataCounter, Logger logger) {
+    Node(int nodeId, DataCounter dataCounter) {
         this.nodeId = nodeId;
-        this.logger = logger;
         this.dataCounter = dataCounter;
         bufferStack = new ConcurrentLinkedQueue();
     }
