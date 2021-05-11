@@ -8,11 +8,13 @@ public class Node implements Runnable {
     private Node next;
     private ConcurrentLinkedQueue<DataPackage> bufferStack;
     private DataCounter dataCounter;
+    private long workingTime;
 
     Node(int nodeId, DataCounter dataCounter) {
         this.nodeId = nodeId;
         this.dataCounter = dataCounter;
         bufferStack = new ConcurrentLinkedQueue();
+        workingTime = 0;
     }
 
     public void addData(DataPackage dataPackage) {
@@ -39,25 +41,28 @@ public class Node implements Runnable {
      */
     @Override
     public void run() {
+        long startTime = System.nanoTime();
         while (!dataCounter.isAllDataReceived()) {
             // ждем, пока не появится возможность обработать
             if (!bufferStack.isEmpty()) {
                 processData();
             }
         }
+        workingTime += System.nanoTime() - startTime;
     }
 
     private void processData() {
         DataPackage data = bufferStack.poll();
 
         if (data.getDestinationNode() == this.nodeId) {
-            // log
             data.setEndTime(System.nanoTime());
             dataCounter.incrementCounter();
         } else {
             next.addData(data);
-//            logger.log(Level.INFO, data.getData() + " sent from "
-//                    + nodeId + " to " + next.getNodeId());
         }
+    }
+
+    public long getWorkingTime() {
+        return workingTime;
     }
 }

@@ -59,38 +59,28 @@ public class RingProcessor {
             service.execute(nodeList.get(i));
     }
 
-    public void findLatency() {
+    private void findLatency() {
         double res = 0;
         for (DataPackage dataPackage : dataPackages) {
             double dataTime = (dataPackage.getEndTime() - dataPackage.getStartTime());// / 1000000.0;
             res += dataTime;
         }
-        System.out.println(res / dataPackages.size());
+        metricsCollector.setLatency(res / dataPackages.size());
     }
 
-//    /**
-//     * Считается среднее время задержки в сети
-//     */
-//    public void countAverageNetworkDelay() {
-//        DecimalFormat df = new DecimalFormat("#.###");
-//        Optional<Long> delay = dataPackages.stream()
-//                .map(it -> (it.getEndTime() - it.getStartTime()))
-//                .reduce(Long::sum);
-//
-//        double res = (double) delay.get() / (double) (dataAmount * 1_000_000);
-//        logger.info("Average network delay is " + df.format(res) + " ms");
-//    }
-//
-//    /**
-//     * Считается среднее время задержки в буфере
-//     */
-//    public void countAverageBufferDelay() {
-//        DecimalFormat df = new DecimalFormat("#.###");
-//        Optional<Long> delay = dataPackages.stream()
-//                .map(DataPackage::getTotalBufferTime)
-//                .reduce(Long::sum);
-//
-//        double res = (double) delay.get() / (double) (dataAmount * 1_000_000);
-//        logger.info("Average buffer delay is " + df.format(res) + " ms");
-//    }
+    private void findRingTime() {
+        double res = 0;
+        for (Node node : nodeList) {
+            //double dataTime = (dataPackage.getEndTime() - dataPackage.getStartTime());// / 1000000.0;
+            double dataTime = node.getWorkingTime() / 1_000_000_000.0;
+            res += dataTime;
+        }
+        metricsCollector.setTokenRingTime(res / nodeList.size());
+    }
+
+    public void saveResults(String filePath) {
+        findLatency();
+        findRingTime();
+        metricsCollector.saveMetrics(filePath);
+    }
 }

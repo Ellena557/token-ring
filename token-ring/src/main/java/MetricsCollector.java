@@ -1,9 +1,9 @@
 public class MetricsCollector {
     private int nodesAmount;
     private long dataAmount;
-    private long latency;
-    private long throughput;
-    private long tokenRingTime;
+    private double latency;
+    private double throughput;
+    private double tokenRingTime;
 
     public int getNodesAmount() {
         return nodesAmount;
@@ -21,27 +21,27 @@ public class MetricsCollector {
         this.dataAmount = dataAmount;
     }
 
-    public long getLatency() {
+    public double getLatency() {
         return latency;
     }
 
-    public void setLatency(long latency) {
+    public void setLatency(double latency) {
         this.latency = latency;
     }
 
-    public long getThroughput() {
+    public double getThroughput() {
         return throughput;
     }
 
-    public void setThroughput(long throughput) {
+    public void setThroughput(double throughput) {
         this.throughput = throughput;
     }
 
-    public long getTokenRingTime() {
+    public double getTokenRingTime() {
         return tokenRingTime;
     }
 
-    public void setTokenRingTime(long tokenRingTime) {
+    public void setTokenRingTime(double tokenRingTime) {
         this.tokenRingTime = tokenRingTime;
     }
 
