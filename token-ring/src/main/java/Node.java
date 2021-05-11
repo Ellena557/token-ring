@@ -1,7 +1,5 @@
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Node implements Runnable {
     private final int nodeId;

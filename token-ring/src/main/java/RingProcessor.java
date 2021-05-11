@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 public class RingProcessor {
     private final int nodesAmount;
