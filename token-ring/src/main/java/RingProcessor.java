@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -54,15 +55,17 @@ public class RingProcessor {
     /**
      * Запуск работы кольца.
      */
-    public void startProcessing(ExecutorService service) {
+    public void startProcessing() {
+        ExecutorService service = Executors.newFixedThreadPool(nodesAmount);
         for (int i = 0; i < nodesAmount; i++)
             service.execute(nodeList.get(i));
+        service.shutdown();
     }
 
     private void findLatency() {
         double res = 0;
         for (DataPackage dataPackage : dataPackages) {
-            double dataTime = (dataPackage.getEndTime() - dataPackage.getStartTime());// / 1000000.0;
+            double dataTime = (dataPackage.getEndTime() - dataPackage.getStartTime()) / 1_000_000.0;
             res += dataTime;
         }
         metricsCollector.setLatency(res / dataPackages.size());
@@ -71,7 +74,6 @@ public class RingProcessor {
     private void findRingTime() {
         double res = 0;
         for (Node node : nodeList) {
-            //double dataTime = (dataPackage.getEndTime() - dataPackage.getStartTime());// / 1000000.0;
             double dataTime = node.getWorkingTime() / 1_000_000_000.0;
             res += dataTime;
         }

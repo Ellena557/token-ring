@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+
 public class MetricsCollector {
     private int nodesAmount;
     private long dataAmount;
@@ -47,8 +52,25 @@ public class MetricsCollector {
 
     public void saveMetrics(String filePath) {
         throughput = dataAmount / tokenRingTime;
+        DecimalFormat df = new DecimalFormat("#.####");
 
         String data = "Metrics for " + nodesAmount + " nodes and "
-                + dataAmount + " messages: /n" + "";
+                + dataAmount + " messages: \n" + "Latency: " + df.format(latency)
+                + " ms \n" + "Throughput: " + df.format(throughput);
+
+        File file = new File(filePath);
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file, true);
+            writer.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
