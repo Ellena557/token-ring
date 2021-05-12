@@ -56,7 +56,7 @@ public class MetricsCollector {
 
         String data = "Metrics for " + nodesAmount + " nodes and "
                 + dataAmount + " messages: \n" + "Latency: " + df.format(latency)
-                + " ms \n" + "Throughput: " + df.format(throughput);
+                + " ms \n" + "Throughput: " + df.format(throughput) + "\n";
 
         File file = new File(filePath);
         FileWriter writer = null;

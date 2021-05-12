@@ -2,7 +2,7 @@ public class MainApp {
     public static void main(String[] args) {
 
         // вводятся параметры
-        TokenRingConfiguration configuration = new TokenRingConfiguration(10, 100);
+        TokenRingConfiguration configuration = new TokenRingConfiguration(10, 10000);
         int warmUps = 10;
         int runs = 8;
         String startPath = "C:\\Users\\Elena\\Desktop\\token-ring\\logs\\";
