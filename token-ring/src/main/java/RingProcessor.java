@@ -62,7 +62,7 @@ public class RingProcessor {
     private void findLatency() {
         double res = 0;
         for (DataPackage dataPackage : dataPackages) {
-            double dataTime = (dataPackage.getEndTime() - dataPackage.getStartTime()) / 1_000_000.0;
+            double dataTime = dataPackage.getRingTime() / 1_000_000.0;
             res += dataTime;
         }
         metricsCollector.setLatency(res / dataPackages.size());

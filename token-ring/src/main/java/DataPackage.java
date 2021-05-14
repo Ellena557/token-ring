@@ -1,9 +1,8 @@
 public class DataPackage {
     private final String data;
     private final int destinationNode;
-    private final long startTime;
-    private long endTime;
-
+    private long startTime;
+    private long ringTime;
 
     public DataPackage(String data, int destinationNode) {
         this.destinationNode = destinationNode;
@@ -22,15 +21,19 @@ public class DataPackage {
         return this.data;
     }
 
-    public long getEndTime() {
-        return endTime;
-    }
-
     public int getDestinationNode() {
         return destinationNode;
     }
 
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
+    public long getRingTime() {
+        return ringTime;
+    }
+
+    public void setRingTime(long ringTime) {
+        this.ringTime = ringTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 }

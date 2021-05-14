@@ -53,7 +53,8 @@ public class Node implements Runnable {
         DataPackage data = bufferStack.poll();
 
         if (data.getDestinationNode() == this.nodeId) {
-            data.setEndTime(System.nanoTime());
+            data.setRingTime(System.nanoTime() - data.getStartTime());
+            data.setStartTime(System.nanoTime());
             dataCounter.incrementCounter();
         } else {
             next.addData(data);
