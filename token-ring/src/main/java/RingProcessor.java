@@ -39,11 +39,10 @@ public class RingProcessor {
         // data
         for (int i = 0; i < dataAmount; i++) {
             String data = "Data_" + i;
-            int dest = (int) ((Math.random() * nodesAmount * 19.753) % nodesAmount);
+            int dest = i % nodesAmount;
 
             DataPackage dataPackage = new DataPackage(data, dest);
-            // отправляем на какой-то узел (не координатор!)
-            nodeList.get(i % nodesAmount).addData(dataPackage);
+            nodeList.get(dest).addData(dataPackage);
 
             // список нужен для подсчета статистики
             dataPackages.add(dataPackage);
