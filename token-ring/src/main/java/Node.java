@@ -69,7 +69,6 @@ public class Node implements Runnable {
             */
 
             data.setRingTime(System.nanoTime() - data.getStartTime());
-            data.setStartTime(System.nanoTime());
             dataCounter.incrementCounter();
         } else {
             /*try {
