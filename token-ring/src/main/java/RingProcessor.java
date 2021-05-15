@@ -42,7 +42,7 @@ public class RingProcessor {
             int dest = i % nodesAmount;
 
             DataPackage dataPackage = new DataPackage(data, dest);
-            nodeList.get(dest).addData(dataPackage);
+            nodeList.get((dest + 1 ) % nodesAmount).addData(dataPackage);
 
             // список нужен для подсчета статистики
             dataPackages.add(dataPackage);

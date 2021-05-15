@@ -53,10 +53,31 @@ public class Node implements Runnable {
         DataPackage data = bufferStack.poll();
 
         if (data.getDestinationNode() == this.nodeId) {
+
+            // обработка
+            // для экспериментов 2-3
+            /*int workTime = 15;
+            if (Math.random() > 0.75) {
+                workTime = 30;
+            }
+
+            try {
+                Thread.sleep(workTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
+
             data.setRingTime(System.nanoTime() - data.getStartTime());
             data.setStartTime(System.nanoTime());
             dataCounter.incrementCounter();
         } else {
+            /*try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            */
             next.addData(data);
         }
     }
